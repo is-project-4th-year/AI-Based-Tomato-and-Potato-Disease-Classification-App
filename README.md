@@ -19,9 +19,9 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ### Technology Stack
 
+- AI Model: CNN - Python with TensorFlow  
 - Frontend: React Native  
 - Backend: Flask / FastAPI  
-- AI Model: Python with TensorFlow  
 - Database: MongoDB  
 
 ---
