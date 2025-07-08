@@ -3,11 +3,45 @@
 
 [GITHUB CHEATSHEET](https://philomatics.com/git-cheatsheet-release)
 
-**Project Overview**
+# AI-Based Tomato and Potato Disease Classification App
 
-Title: AI-Based Tomato and Potato Disease Classification App
-Student: Peter Maina (136532)
-Technology Stack: React Native, Python/TensorFlow, Flask/FastAPI, MongoDB
-Methodology: Agile with 2-week sprints
-Timeline: April 2025 - November 2025
-Target Users: Kenyan smallholder farmers, extension officers, system administrators
+## Project Overview
+
+This project aims to develop an AI-powered mobile application that helps classify diseases in tomato and potato plants using image-based analysis. The app will serve as a diagnostic tool for Kenyan smallholder farmers, agricultural extension officers, and system administrators, ultimately improving crop health management and yield outcomes.
+
+---
+
+### Student
+**Peter Maina**  
+**Student ID:** 136532
+
+---
+
+### Technology Stack
+
+- Frontend: React Native  
+- Backend: Flask / FastAPI  
+- AI Model: Python with TensorFlow  
+- Database: MongoDB  
+
+---
+
+### Methodology
+
+- Agile development  
+- 2-week sprint cycles
+
+---
+
+### Timeline
+
+April 2025 – November 2025
+
+---
+
+### Target Users
+
+- Kenyan smallholder farmers  
+- Agricultural extension officers  
+- System administrators  
+
