@@ -11,7 +11,7 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ---
 
-### Student
+### Student Details
 **Peter Maina**  
 **Student ID:** 136532
 
@@ -28,7 +28,7 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ### Methodology
 
-- Agile development  
+- - development  
 - 2-week sprint cycles
 
 ---
