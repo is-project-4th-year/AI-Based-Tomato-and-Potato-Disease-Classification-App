@@ -11,7 +11,7 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ---
 
-### Student Details
+### Student
 **Peter Maina**  
 **Student ID:** 136532
 
@@ -28,8 +28,13 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ### Methodology
 
-- CRISP-development  
-- 2-week sprint cycles
+- CRISP-DM (Cross-Industry Standard Process for Data Mining)
+  - Business Understanding  
+  - Data Understanding  
+  - Data Preparation  
+  - Modeling  
+  - Evaluation  
+  - Deployment
 
 ---
 
