@@ -28,7 +28,7 @@ This project aims to develop an AI-powered mobile application that helps classif
 
 ### Methodology
 
-- - development  
+- CRISP-development  
 - 2-week sprint cycles
 
 ---
