@@ -166,6 +166,19 @@ def organize_dataset(config, raw_dir):
 
     print(f"Found dataset at: {dataset_dir}")
 
+    # Check if dataset has subdirectories like color/grayscale/segmented
+    # If so, use the 'color' directory as the source
+    subdirs = [d for d in dataset_dir.iterdir() if d.is_dir()]
+    subdir_names = [d.name.lower() for d in subdirs]
+
+    source_dir = dataset_dir
+    if 'color' in subdir_names:
+        source_dir = dataset_dir / 'color'
+        print(f"Using color images from: {source_dir}")
+    elif 'grayscale' in subdir_names and 'color' not in subdir_names:
+        source_dir = dataset_dir / 'grayscale'
+        print(f"Using grayscale images from: {source_dir}")
+
     # Create tomato and potato directories
     tomato_dir.mkdir(exist_ok=True)
     potato_dir.mkdir(exist_ok=True)
@@ -173,7 +186,7 @@ def organize_dataset(config, raw_dir):
     # Move tomato and potato classes to respective directories
     class_count = 0
 
-    for class_dir in dataset_dir.iterdir():
+    for class_dir in source_dir.iterdir():
         if class_dir.is_dir():
             class_name = class_dir.name
 
