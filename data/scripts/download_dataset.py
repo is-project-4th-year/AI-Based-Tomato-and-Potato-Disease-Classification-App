@@ -138,6 +138,7 @@ def organize_dataset(config, raw_dir):
         raw_dir / "PlantVillage",
         raw_dir / "plant-village",
         raw_dir / "plantvillage-dataset",
+        raw_dir / "plantvillage dataset",  # With space
         raw_dir,
     ]
 
@@ -150,8 +151,17 @@ def organize_dataset(config, raw_dir):
             dataset_dir = pdir
             break
 
+    # If still not found, search for any directory containing "plantvillage" in the name
+    if not dataset_dir:
+        for item in raw_dir.iterdir():
+            if item.is_dir() and "plantvillage" in item.name.lower():
+                dataset_dir = item
+                break
+
     if not dataset_dir:
         print("✗ Could not find extracted dataset directory")
+        print(f"  Searched in: {raw_dir}")
+        print(f"  Contents: {list(raw_dir.iterdir())}")
         return False
 
     print(f"Found dataset at: {dataset_dir}")
