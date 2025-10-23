@@ -116,6 +116,22 @@ def organize_dataset(config, raw_dir):
     """
     print("\nOrganizing dataset structure...")
 
+    # Check if already organized
+    tomato_dir = raw_dir / "tomato"
+    potato_dir = raw_dir / "potato"
+
+    # If already organized, skip reorganization
+    if tomato_dir.exists() and potato_dir.exists():
+        # Check if these directories have class subdirectories
+        tomato_classes = [d for d in tomato_dir.iterdir() if d.is_dir() and "tomato" in d.name.lower()]
+        potato_classes = [d for d in potato_dir.iterdir() if d.is_dir() and "potato" in d.name.lower()]
+
+        if len(tomato_classes) > 0 and len(potato_classes) > 0:
+            print("✓ Dataset already organized")
+            print(f"  Found {len(tomato_classes)} tomato classes")
+            print(f"  Found {len(potato_classes)} potato classes")
+            return True
+
     # Find the downloaded dataset directory
     # PlantVillage dataset typically extracts to a specific folder
     possible_dirs = [
@@ -128,6 +144,9 @@ def organize_dataset(config, raw_dir):
     dataset_dir = None
     for pdir in possible_dirs:
         if pdir.exists() and any(pdir.iterdir()):
+            # Don't use raw_dir if tomato/potato already exist there
+            if pdir == raw_dir and tomato_dir.exists() and potato_dir.exists():
+                continue
             dataset_dir = pdir
             break
 
@@ -138,8 +157,6 @@ def organize_dataset(config, raw_dir):
     print(f"Found dataset at: {dataset_dir}")
 
     # Create tomato and potato directories
-    tomato_dir = raw_dir / "tomato"
-    potato_dir = raw_dir / "potato"
     tomato_dir.mkdir(exist_ok=True)
     potato_dir.mkdir(exist_ok=True)
 
@@ -149,6 +166,10 @@ def organize_dataset(config, raw_dir):
     for class_dir in dataset_dir.iterdir():
         if class_dir.is_dir():
             class_name = class_dir.name
+
+            # Skip if it's already the tomato or potato parent directory
+            if class_name in ["tomato", "potato"]:
+                continue
 
             # Determine if it's tomato or potato
             if "tomato" in class_name.lower():
