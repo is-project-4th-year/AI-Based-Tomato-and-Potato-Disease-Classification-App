@@ -245,7 +245,12 @@ def validate_dataset(config, raw_dir):
     total_images = 0
     for class_dir in tomato_classes + potato_classes:
         if class_dir.is_dir():
-            image_files = list(class_dir.glob("*.jpg")) + list(class_dir.glob("*.png")) + list(class_dir.glob("*.jpeg"))
+            # Case-insensitive glob for common image extensions
+            image_files = (
+                list(class_dir.glob("*.jpg")) + list(class_dir.glob("*.JPG")) +
+                list(class_dir.glob("*.jpeg")) + list(class_dir.glob("*.JPEG")) +
+                list(class_dir.glob("*.png")) + list(class_dir.glob("*.PNG"))
+            )
             num_images = len(image_files)
             total_images += num_images
             print(f"  {class_dir.name}: {num_images} images")
@@ -256,7 +261,12 @@ def validate_dataset(config, raw_dir):
     min_images = config['validation']['min_images_per_class']
     for class_dir in tomato_classes + potato_classes:
         if class_dir.is_dir():
-            image_files = list(class_dir.glob("*.jpg")) + list(class_dir.glob("*.png")) + list(class_dir.glob("*.jpeg"))
+            # Case-insensitive glob for common image extensions
+            image_files = (
+                list(class_dir.glob("*.jpg")) + list(class_dir.glob("*.JPG")) +
+                list(class_dir.glob("*.jpeg")) + list(class_dir.glob("*.JPEG")) +
+                list(class_dir.glob("*.png")) + list(class_dir.glob("*.PNG"))
+            )
             if len(image_files) < min_images:
                 print(f"✗ Warning: {class_dir.name} has only {len(image_files)} images (minimum: {min_images})")
 
