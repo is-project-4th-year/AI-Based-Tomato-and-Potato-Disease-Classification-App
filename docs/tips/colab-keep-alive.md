@@ -15,7 +15,9 @@
 ```javascript
 function keepAlive() {
   console.log('⚡ Keep-alive ping:', new Date().toLocaleTimeString());
-  document.querySelector("colab-connect-button").click();
+  document.querySelector("colab-connect-button")?.click();
+  document.querySelector('md-icon-button[aria-label*="comment"]')?.click();
+  setTimeout(() => document.querySelector('md-icon-button[aria-label*="comment"]')?.click(), 500);
 }
 setInterval(keepAlive, 60000); // Every 60 seconds
 console.log('✅ Keep-alive active!');
@@ -27,9 +29,10 @@ console.log('✅ Keep-alive active!');
 
 ## What It Does
 
-- Simulates activity by clicking the connect button every 60 seconds
+- Simulates activity by clicking the connect button and comments button every 60 seconds
+- Toggles the comments pane open/close to show activity
 - Logs timestamps to console so you can verify it's working
-- Prevents Colab's idle timeout
+- Prevents Colab's idle timeout (90-minute limit)
 - Does not interfere with training
 
 ## Additional Tips
