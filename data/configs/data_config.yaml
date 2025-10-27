@@ -1,0 +1,77 @@
+# Data Configuration for Plant Disease Classification
+# Author: Peter Maina (136532)
+# Project: AI-Based Tomato & Potato Disease Classification
+
+# Dataset Information
+dataset:
+  name: "PlantVillage"
+  source: "Kaggle"
+  kaggle_dataset: "abdallahalidev/plantvillage-dataset"
+  total_images: 54000
+  size_gb: 4.37
+  image_format: "RGB"
+
+# Data Paths
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  train: "data/processed/train"
+  validation: "data/processed/validation"
+  test: "data/processed/test"
+
+# Dataset Split Ratios
+split:
+  train: 0.70
+  validation: 0.20
+  test: 0.10
+  stratified: true
+  random_seed: 42
+
+# Image Processing Parameters
+preprocessing:
+  target_size: [224, 224]
+  color_mode: "rgb"
+  normalize: true
+  normalization_range: [0, 1]
+  interpolation: "bilinear"
+
+# Class Definitions
+classes:
+  tomato:
+    - "Tomato___Bacterial_spot"
+    - "Tomato___Early_blight"
+    - "Tomato___Late_blight"
+    - "Tomato___Leaf_Mold"
+    - "Tomato___Septoria_leaf_spot"
+    - "Tomato___Spider_mites Two-spotted_spider_mite"
+    - "Tomato___Target_Spot"
+    - "Tomato___Tomato_Yellow_Leaf_Curl_Virus"
+    - "Tomato___Tomato_mosaic_virus"
+    - "Tomato___healthy"
+
+  potato:
+    - "Potato___Early_blight"
+    - "Potato___Late_blight"
+    - "Potato___healthy"
+
+# Total number of classes
+num_classes: 13
+
+# Data Validation
+validation:
+  min_images_per_class: 100
+  max_image_size_mb: 10
+  allowed_extensions: [".jpg", ".jpeg", ".png"]
+  verify_integrity: true
+
+# Data Augmentation Parameters (for reference)
+augmentation:
+  rotation_range: 20
+  width_shift_range: 0.2
+  height_shift_range: 0.2
+  shear_range: 0.2
+  zoom_range: 0.2
+  horizontal_flip: true
+  vertical_flip: false
+  fill_mode: "nearest"
+  brightness_range: [0.8, 1.2]

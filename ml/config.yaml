@@ -1,0 +1,145 @@
+# Machine Learning Configuration
+# Author: Peter Maina (136532)
+# Project: AI-Based Tomato & Potato Disease Classification
+
+# Model Architecture Configuration
+model:
+  # Options: "baseline", "MobileNetV2", "EfficientNetB0"
+  architecture: "MobileNetV2"
+  input_shape: [224, 224, 3]
+  num_classes: 13
+
+  # Transfer Learning Settings
+  use_pretrained: true
+  pretrained_weights: "imagenet"
+  freeze_base_model: true
+  fine_tune_layers: 20  # Number of layers to unfreeze for fine-tuning
+
+# Training Configuration
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.0001
+  optimizer: "adam"
+  loss_function: "categorical_crossentropy"
+
+  # Learning Rate Scheduler
+  use_lr_scheduler: true
+  lr_scheduler:
+    type: "ReduceLROnPlateau"
+    monitor: "val_loss"
+    factor: 0.2
+    patience: 5
+    min_lr: 0.000001
+
+  # Early Stopping
+  use_early_stopping: true
+  early_stopping:
+    monitor: "val_loss"
+    patience: 15
+    restore_best_weights: true
+    min_delta: 0.001
+
+# Data Augmentation Configuration
+data_augmentation:
+  enabled: true
+  rotation_range: 20
+  width_shift_range: 0.2
+  height_shift_range: 0.2
+  shear_range: 0.2
+  zoom_range: 0.2
+  horizontal_flip: true
+  vertical_flip: false
+  fill_mode: "nearest"
+  brightness_range: [0.8, 1.2]
+
+# Validation Configuration
+validation:
+  validation_split: 0.2  # Used if not using separate validation set
+  shuffle: true
+
+# Callbacks Configuration
+callbacks:
+  # Model Checkpoint
+  model_checkpoint:
+    enabled: true
+    filepath: "ml/trained_models/checkpoints/model_{epoch:02d}_{val_accuracy:.2f}.h5"
+    monitor: "val_accuracy"
+    save_best_only: true
+    save_weights_only: false
+    mode: "max"
+
+  # TensorBoard
+  tensorboard:
+    enabled: true
+    log_dir: "ml/logs/tensorboard"
+    histogram_freq: 1
+    write_graph: true
+    write_images: true
+
+  # CSV Logger
+  csv_logger:
+    enabled: true
+    filename: "ml/logs/training/training_log.csv"
+    append: false
+
+# Model Compilation Metrics
+metrics:
+  - "accuracy"
+  - "precision"
+  - "recall"
+  - "AUC"
+
+# GPU Configuration
+gpu:
+  use_gpu: true
+  mixed_precision: false  # Set to true for faster training on compatible GPUs
+  memory_growth: true
+
+# Paths Configuration
+paths:
+  data_dir: "data/processed"
+  train_dir: "data/processed/train"
+  val_dir: "data/processed/validation"
+  test_dir: "data/processed/test"
+  model_save_dir: "ml/trained_models/final"
+  checkpoint_dir: "ml/trained_models/checkpoints"
+  logs_dir: "ml/logs"
+
+# Random Seed for Reproducibility
+random_seed: 42
+
+# Model Export Configuration
+export:
+  save_format: "h5"  # Options: "h5", "tf"
+  include_optimizer: true
+
+  # TFLite Conversion (for mobile deployment)
+  tflite:
+    enabled: true
+    optimizations: ["DEFAULT"]
+    quantization: "float16"  # Options: "float16", "int8", "dynamic"
+
+# Evaluation Configuration
+evaluation:
+  batch_size: 32
+  generate_confusion_matrix: true
+  generate_classification_report: true
+  save_predictions: true
+  predictions_file: "ml/logs/predictions.csv"
+
+# Class Names (for reference and labeling)
+class_names:
+  - "Tomato___Bacterial_spot"
+  - "Tomato___Early_blight"
+  - "Tomato___Late_blight"
+  - "Tomato___Leaf_Mold"
+  - "Tomato___Septoria_leaf_spot"
+  - "Tomato___Spider_mites Two-spotted_spider_mite"
+  - "Tomato___Target_Spot"
+  - "Tomato___Tomato_Yellow_Leaf_Curl_Virus"
+  - "Tomato___Tomato_mosaic_virus"
+  - "Tomato___healthy"
+  - "Potato___Early_blight"
+  - "Potato___Late_blight"
+  - "Potato___healthy"
