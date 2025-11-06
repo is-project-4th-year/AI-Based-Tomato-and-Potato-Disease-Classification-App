@@ -323,6 +323,67 @@ webapp/ml-service/
 
 ---
 
+### 2025-11-06 11:45 UTC - ML Service Integration with Laravel
+
+**Action:** Integrated FastAPI ML service with Laravel backend
+
+**Result:** ✅ Success
+
+**Files Created/Modified:**
+
+**Configuration:**
+- `config/ml.php` - ML service configuration (URL, timeout, endpoints, retry logic)
+- `.env` - Added ML_SERVICE_URL and related config
+- `.env.example` - Updated with ML service variables
+
+**Services:**
+- `app/Services/MLService.php` - HTTP client for ML service communication
+  - `predict()` - Sends image to ML service, returns prediction
+  - `isHealthy()` - Health check endpoint
+  - `getModelInfo()` - Retrieves model specifications
+
+**Controllers:**
+- `app/Http/Controllers/PredictionController.php` - Updated store() method
+  - Integrated ML service dependency injection
+  - Calls `MLService::predict()` for real inference
+  - Extracts plant type from prediction
+  - Matches disease from database
+  - Stores complete prediction with confidence, all_predictions, inference_time
+  - Cleanup on failure (deletes uploaded image)
+  - Comprehensive error handling and logging
+
+**Features Implemented:**
+- **Real-time Prediction:** Images uploaded by users are sent to ML service
+- **Disease Matching:** Predicted class mapped to disease database
+  - Extracts disease name from class (e.g., "Tomato___Late_blight" → "Late Blight")
+  - Fuzzy matching with database diseases
+  - Links prediction to disease for treatment info
+- **Error Handling:**
+  - Catches ML service failures
+  - Cleans up uploaded images on error
+  - Returns meaningful error messages
+  - Logs all prediction attempts
+- **Plant Type Detection:** Automatically detects if tomato or potato from class name
+- **Performance Tracking:** Stores inference time from ML service
+
+**Prediction Flow:**
+1. User uploads image via API
+2. Laravel validates and stores image
+3. Laravel sends image to ML service (FastAPI)
+4. ML service runs MobileNetV2 inference
+5. ML service returns prediction with confidence
+6. Laravel stores prediction in database
+7. Laravel links to disease record for treatment info
+8. Returns complete prediction to user
+
+**Configuration Options:**
+- `ML_SERVICE_URL`: FastAPI service endpoint (default: http://localhost:8000)
+- `ML_SERVICE_TIMEOUT`: Request timeout in seconds (default: 30)
+- `ML_SERVICE_RETRY_TIMES`: Number of retries on failure (default: 2)
+- `ML_SERVICE_RETRY_SLEEP`: Delay between retries in ms (default: 1000)
+
+---
+
 ## Next Steps
 
 1. ~~Install Laravel 12~~ ✅
@@ -331,8 +392,8 @@ webapp/ml-service/
 4. ~~Create base models and migrations~~ ✅
 5. ~~Implement controllers~~ ✅
 6. ~~Initialize FastAPI ML service~~ ✅
-7. Initialize React frontend (Next)
-8. Integrate ML service with Laravel backend
+7. ~~Integrate ML service with Laravel backend~~ ✅
+8. Initialize React frontend (Next)
 9. Test complete end-to-end flow
 
 ---
