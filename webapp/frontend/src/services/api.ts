@@ -71,21 +71,21 @@ export const handleApiError = (error: unknown): string => {
 // Authentication endpoints
 export const authService = {
   async register(data: RegisterRequest): Promise<AuthResponse> {
-    const response = await api.post<AuthResponse>('/register', data);
+    const response = await api.post<AuthResponse>('/auth/register', data);
     return response.data;
   },
 
   async login(data: LoginRequest): Promise<AuthResponse> {
-    const response = await api.post<AuthResponse>('/login', data);
+    const response = await api.post<AuthResponse>('/auth/login', data);
     return response.data;
   },
 
   async logout(): Promise<void> {
-    await api.post('/logout');
+    await api.post('/auth/logout');
   },
 
   async getUser(): Promise<User> {
-    const response = await api.get<{ data: User }>('/user');
+    const response = await api.get<{ data: User }>('/auth/user');
     return response.data.data;
   },
 };

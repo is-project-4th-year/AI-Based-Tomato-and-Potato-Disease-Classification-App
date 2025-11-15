@@ -31,9 +31,9 @@ class Prediction extends Model
     protected function casts(): array
     {
         return [
-            'confidence' => 'decimal:4',
+            'confidence' => 'float',
             'all_predictions' => 'array',
-            'inference_time' => 'decimal:3',
+            'inference_time' => 'float',
         ];
     }
 

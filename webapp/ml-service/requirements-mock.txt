@@ -1,0 +1,21 @@
+# FastAPI ML Service Requirements (MOCK MODE)
+# Lightweight version for testing without TensorFlow
+# Python 3.10+
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Image Processing (lightweight - only for validation)
+pillow>=10.1.0
+
+# Data Validation
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Note: TensorFlow removed for mock mode
+# To use production mode, install from requirements.txt instead

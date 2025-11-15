@@ -18,8 +18,11 @@ from app.models.prediction import (
     ModelInfoResponse,
     ErrorResponse
 )
-from app.services.predictor import predictor
-from app.services.model_loader import model_loader
+# MOCK MODE: Using simulated predictions (no TensorFlow dependency)
+# To revert to production: Change import to 'from app.services.predictor import predictor'
+from app.services.predictor_mock import predictor
+# from app.services.predictor import predictor  # Production mode (requires TensorFlow)
+# from app.services.model_loader import model_loader  # Not needed in mock mode
 
 # Configure logging
 logging.basicConfig(
@@ -129,7 +132,16 @@ async def get_model_info():
         )
 
     try:
-        model_info = model_loader.get_model_info()
+        # MOCK MODE: Return simulated model info
+        model_info = {
+            "model_name": "MobileNetV2",
+            "model_version": "20251027_200458_final",
+            "num_classes": 13,
+            "classes": predictor.class_labels,
+            "input_shape": [224, 224, 3]
+        }
+        # Production mode (requires TensorFlow):
+        # model_info = model_loader.get_model_info()
         return ModelInfoResponse(**model_info)
 
     except Exception as e:
