@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircle, AlertCircle, FileText, Eye, Pill, Shield, AlertTriangle, PartyPopper } from 'lucide-react';
 import type { Prediction } from '../types';
 
 interface PredictionResultProps {
@@ -30,13 +31,21 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
   return (
     <div className="space-y-6 animate-scale-in">
       {/* Main prediction */}
-      <div className={`glass-result-card ${isHealthy ? 'glow-green' : ''}`}>
+      <div className={`glass-result-card ${isHealthy ? 'shadow-lg' : ''}`}>
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-4xl">
-                {isHealthy ? '✅' : '🔴'}
-              </span>
+              <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
+                isHealthy
+                  ? 'bg-gradient-to-br from-emerald-100 to-green-100'
+                  : 'bg-gradient-to-br from-red-100 to-orange-100'
+              }`}>
+                {isHealthy ? (
+                  <CheckCircle className="w-8 h-8 text-emerald-600" />
+                ) : (
+                  <AlertCircle className="w-8 h-8 text-red-600" />
+                )}
+              </div>
               <div>
                 <h3 className="text-xl font-bold text-gray-800">
                   {formatClassName(prediction.predicted_class)}
@@ -48,7 +57,7 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-3xl font-bold text-primary-600">
+            <div className="text-3xl font-bold text-emerald-600">
               {confidencePercentage}%
             </div>
             <p className="text-xs text-gray-500">Confidence</p>
@@ -74,8 +83,8 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
           <div className="space-y-4 pt-4 border-t border-white/50">
             {prediction.disease.description && (
               <div>
-                <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                  <span className="mr-2">📝</span>
+                <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-emerald-600" />
                   Description
                 </h4>
                 <p className="text-sm text-gray-700">{prediction.disease.description}</p>
@@ -84,8 +93,8 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
 
             {prediction.disease.symptoms && (
               <div>
-                <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                  <span className="mr-2">🔍</span>
+                <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-blue-600" />
                   Symptoms
                 </h4>
                 <p className="text-sm text-gray-700">{prediction.disease.symptoms}</p>
@@ -94,8 +103,8 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
 
             {prediction.disease.treatment && (
               <div>
-                <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                  <span className="mr-2">💊</span>
+                <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  <Pill className="w-5 h-5 text-purple-600" />
                   Treatment
                 </h4>
                 <p className="text-sm text-gray-700">{prediction.disease.treatment}</p>
@@ -104,8 +113,8 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
 
             {prediction.disease.prevention && (
               <div>
-                <h4 className="font-bold text-gray-800 mb-2 flex items-center">
-                  <span className="mr-2">🛡️</span>
+                <h4 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-indigo-600" />
                   Prevention
                 </h4>
                 <p className="text-sm text-gray-700">{prediction.disease.prevention}</p>
@@ -131,7 +140,7 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
                 <div className="flex items-center gap-3">
                   <div className="w-32 bg-gray-200 rounded-full h-2">
                     <div
-                      className="bg-primary-500 h-2 rounded-full"
+                      className="bg-emerald-500 h-2 rounded-full"
                       style={{ width: `${pred.confidence * 100}%` }}
                     ></div>
                   </div>
@@ -148,25 +157,25 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
       {/* Action tips */}
       {!isHealthy && (
         <div className="glass-card p-6 bg-gradient-to-br from-amber-50/70 to-orange-50/70">
-          <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-            <span className="mr-2">⚠️</span>
+          <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5 text-amber-600" />
             Recommended Actions
           </h4>
           <ul className="space-y-2 text-sm text-gray-700">
-            <li className="flex items-start">
-              <span className="text-primary-500 mr-2 mt-1">•</span>
+            <li className="flex items-start gap-2">
+              <span className="text-emerald-500 mt-1 flex-shrink-0">•</span>
               <span>Isolate affected plants to prevent disease spread</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-primary-500 mr-2 mt-1">•</span>
+            <li className="flex items-start gap-2">
+              <span className="text-emerald-500 mt-1 flex-shrink-0">•</span>
               <span>Follow the treatment recommendations above</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-primary-500 mr-2 mt-1">•</span>
+            <li className="flex items-start gap-2">
+              <span className="text-emerald-500 mt-1 flex-shrink-0">•</span>
               <span>Monitor plant health daily and recheck in 7-10 days</span>
             </li>
-            <li className="flex items-start">
-              <span className="text-primary-500 mr-2 mt-1">•</span>
+            <li className="flex items-start gap-2">
+              <span className="text-emerald-500 mt-1 flex-shrink-0">•</span>
               <span>Consult a local agricultural expert for severe cases</span>
             </li>
           </ul>
@@ -175,8 +184,8 @@ const PredictionResult: React.FC<PredictionResultProps> = ({ prediction }) => {
 
       {isHealthy && (
         <div className="glass-card p-6 bg-gradient-to-br from-green-50/70 to-emerald-50/70">
-          <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-            <span className="mr-2">🎉</span>
+          <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+            <PartyPopper className="w-5 h-5 text-emerald-600" />
             Great News!
           </h4>
           <p className="text-sm text-gray-700">

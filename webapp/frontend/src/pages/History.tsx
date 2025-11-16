@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Loader2, AlertCircle, FileText, Clock, Zap, Trash2, Sparkles } from 'lucide-react';
 import { predictionService, handleApiError } from '../services/api';
 import type { Prediction } from '../types';
 
@@ -65,7 +66,9 @@ const History: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-center h-64">
           <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-primary-500 mb-4"></div>
+            <div className="mx-auto w-20 h-20 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mb-4">
+              <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
+            </div>
             <p className="text-lg font-medium text-gray-700">Loading your history...</p>
           </div>
         </div>
@@ -77,9 +80,9 @@ const History: React.FC = () => {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="glass-card p-8 text-center">
-          <svg className="mx-auto h-16 w-16 text-red-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
+          <div className="mx-auto w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mb-4">
+            <AlertCircle className="w-10 h-10 text-red-500" />
+          </div>
           <p className="text-lg text-red-600 mb-4">{error}</p>
           <button onClick={loadPredictions} className="glass-button-primary">
             Try Again
@@ -101,9 +104,9 @@ const History: React.FC = () => {
 
       {predictions.length === 0 ? (
         <div className="glass-container text-center py-16">
-          <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
+          <div className="mx-auto w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+            <FileText className="w-12 h-12 text-gray-400" />
+          </div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">No predictions yet</h2>
           <p className="text-gray-600 mb-6">Start by analyzing your first plant image</p>
           <a href="/dashboard" className="glass-button-primary inline-block">
@@ -118,7 +121,7 @@ const History: React.FC = () => {
               <div
                 key={prediction.id}
                 className={`glass-card p-6 cursor-pointer transition-all hover:shadow-2xl ${
-                  selectedPrediction?.id === prediction.id ? 'ring-2 ring-primary-500 glow-green' : ''
+                  selectedPrediction?.id === prediction.id ? 'ring-2 ring-emerald-500 shadow-lg' : ''
                 }`}
                 onClick={() => setSelectedPrediction(prediction)}
               >
@@ -143,23 +146,19 @@ const History: React.FC = () => {
                           {prediction.plant_type} Plant
                         </p>
                       </div>
-                      <span className="text-2xl font-bold text-primary-600">
+                      <span className="text-2xl font-bold text-emerald-600">
                         {(prediction.confidence * 100).toFixed(1)}%
                       </span>
                     </div>
 
                     <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
                         {formatDate(prediction.created_at)}
                       </span>
                       {prediction.inference_time && (
-                        <span className="flex items-center">
-                          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
+                        <span className="flex items-center gap-1">
+                          <Zap className="w-4 h-4" />
                           {prediction.inference_time.toFixed(2)}s
                         </span>
                       )}
@@ -175,9 +174,7 @@ const History: React.FC = () => {
                     className="flex-shrink-0 p-2 hover:bg-red-100/80 rounded-xl transition-colors"
                     title="Delete"
                   >
-                    <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    <Trash2 className="w-5 h-5 text-red-500" />
                   </button>
                 </div>
               </div>
@@ -189,9 +186,9 @@ const History: React.FC = () => {
             <div className="glass-container sticky top-24">
               {!selectedPrediction ? (
                 <div className="text-center py-12">
-                  <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                  </svg>
+                  <div className="mx-auto w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+                    <Sparkles className="w-8 h-8 text-gray-400" />
+                  </div>
                   <p className="text-gray-500">
                     Select a prediction to view details
                   </p>
@@ -211,7 +208,7 @@ const History: React.FC = () => {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Confidence:</span>
-                        <span className="font-bold text-primary-600">
+                        <span className="font-bold text-emerald-600">
                           {(selectedPrediction.confidence * 100).toFixed(2)}%
                         </span>
                       </div>
@@ -239,7 +236,7 @@ const History: React.FC = () => {
                         <p className="text-sm text-gray-700 mb-3">{selectedPrediction.disease.description}</p>
                       )}
                       {selectedPrediction.disease.severity && (
-                        <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-700">
+                        <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
                           {selectedPrediction.disease.severity.toUpperCase()} Severity
                         </span>
                       )}
