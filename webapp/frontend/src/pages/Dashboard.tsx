@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Upload, Loader2, RotateCcw, Microscope, Zap, Target, Lightbulb, FileText } from 'lucide-react';
 import { predictionService } from '../services/api';
 import type { Prediction } from '../types';
 import PredictionResult from '../components/PredictionResult';
@@ -133,19 +134,9 @@ const Dashboard: React.FC = () => {
                 className="hidden"
               />
               <div className="text-center">
-                <svg
-                  className="mx-auto h-16 w-16 text-primary-400 mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
+                <div className="mx-auto w-20 h-20 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mb-4">
+                  <Upload className="w-10 h-10 text-emerald-600" />
+                </div>
                 <p className="text-lg font-medium text-gray-700 mb-2">
                   Drop your image here, or click to browse
                 </p>
@@ -173,15 +164,15 @@ const Dashboard: React.FC = () => {
                   className="glass-button-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isUploading ? (
-                    <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="w-5 h-5 animate-spin" />
                       Analyzing...
                     </span>
                   ) : (
-                    '🔬 Analyze Disease'
+                    <span className="flex items-center justify-center gap-2">
+                      <Microscope className="w-5 h-5" />
+                      Analyze Disease
+                    </span>
                   )}
                 </button>
                 <button
@@ -189,7 +180,7 @@ const Dashboard: React.FC = () => {
                   disabled={isUploading}
                   className="glass-button-secondary disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Reset
+                  <RotateCcw className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -210,9 +201,9 @@ const Dashboard: React.FC = () => {
           {!prediction && !isUploading && (
             <div className="flex items-center justify-center h-64 text-gray-400">
               <div className="text-center">
-                <svg className="mx-auto h-20 w-20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
+                <div className="mx-auto w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+                  <FileText className="w-10 h-10 text-gray-400" />
+                </div>
                 <p className="text-lg font-medium">No results yet</p>
                 <p className="text-sm mt-2">Upload and analyze an image to see results</p>
               </div>
@@ -222,7 +213,9 @@ const Dashboard: React.FC = () => {
           {isUploading && (
             <div className="flex items-center justify-center h-64">
               <div className="text-center">
-                <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-primary-500 mb-4"></div>
+                <div className="mx-auto w-20 h-20 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mb-4">
+                  <Loader2 className="w-10 h-10 text-emerald-600 animate-spin" />
+                </div>
                 <p className="text-lg font-medium text-gray-700">Analyzing your plant...</p>
                 <p className="text-sm text-gray-500 mt-2">This may take a few moments</p>
               </div>
@@ -235,22 +228,28 @@ const Dashboard: React.FC = () => {
 
       {/* Info cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-        <div className="glass-card p-6 animate-slide-up">
-          <div className="text-4xl mb-3">⚡</div>
+        <div className="glass-card p-6 animate-slide-up hover:shadow-xl transition-shadow">
+          <div className="w-14 h-14 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl flex items-center justify-center mb-4">
+            <Zap className="w-7 h-7 text-amber-600" />
+          </div>
           <h3 className="text-lg font-bold text-gray-800 mb-2">Fast Detection</h3>
           <p className="text-sm text-gray-600">
             Get instant results powered by advanced AI models trained on thousands of plant images.
           </p>
         </div>
-        <div className="glass-card p-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="text-4xl mb-3">🎯</div>
+        <div className="glass-card p-6 animate-slide-up hover:shadow-xl transition-shadow" style={{ animationDelay: '0.1s' }}>
+          <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-2xl flex items-center justify-center mb-4">
+            <Target className="w-7 h-7 text-blue-600" />
+          </div>
           <h3 className="text-lg font-bold text-gray-800 mb-2">High Accuracy</h3>
           <p className="text-sm text-gray-600">
             MobileNetV2 model with 95%+ accuracy across 13 different plant disease classes.
           </p>
         </div>
-        <div className="glass-card p-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <div className="text-4xl mb-3">💡</div>
+        <div className="glass-card p-6 animate-slide-up hover:shadow-xl transition-shadow" style={{ animationDelay: '0.2s' }}>
+          <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl flex items-center justify-center mb-4">
+            <Lightbulb className="w-7 h-7 text-purple-600" />
+          </div>
           <h3 className="text-lg font-bold text-gray-800 mb-2">Expert Advice</h3>
           <p className="text-sm text-gray-600">
             Get detailed treatment recommendations and prevention tips for every detected disease.
