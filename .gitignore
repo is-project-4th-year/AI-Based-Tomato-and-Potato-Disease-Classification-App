@@ -38,3 +38,36 @@ Thumbs.db
 # Environment variables
 .env
 kaggle.json
+
+# Web Application
+# Laravel
+/webapp/backend/vendor/
+/webapp/backend/storage/*.key
+/webapp/backend/storage/app/*
+!/webapp/backend/storage/app/.gitignore
+/webapp/backend/storage/framework/cache/*
+!/webapp/backend/storage/framework/cache/.gitignore
+/webapp/backend/storage/framework/sessions/*
+!/webapp/backend/storage/framework/sessions/.gitignore
+/webapp/backend/storage/framework/testing/*
+!/webapp/backend/storage/framework/testing/.gitignore
+/webapp/backend/storage/framework/views/*
+!/webapp/backend/storage/framework/views/.gitignore
+/webapp/backend/storage/logs/*
+!/webapp/backend/storage/logs/.gitignore
+/webapp/backend/bootstrap/cache/*
+!/webapp/backend/bootstrap/cache/.gitignore
+
+# Node/React
+node_modules/
+/webapp/frontend/dist/
+/webapp/frontend/.vite/
+/webapp/frontend/coverage/
+
+# Model files (large)
+*.h5
+*.tflite
+*.pb
+*.ckpt
+*.pth
+*.pt
